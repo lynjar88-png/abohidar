@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>خياطة ابو حيدر - نظام متكامل</title>
+    <style>
+        /* جميع الأنماط السابقة مع إضافة أزرار التقدم */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            height: 100%;
+            max-width: 500px;
+            max-height: 900px;
+            margin: 0 auto;
+            background: #f5f7fb;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border-radius: 30px;
+        }
+
+        /* Header ثابت */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px 15px;
+            color: white;
+            text-align: center;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .header p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .currency-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .settings-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+        }
+
+        /* Tabs ثابتة */
+        .tabs {
+            display: flex;
+            gap: 3px;
+            padding: 10px 10px 5px 10px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+            z-index: 9;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px 2px;
+            border: none;
+            background: transparent;
+            color: #555;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn .icon {
+            font-size: 1.1rem;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+
+        /* Content Area - Scrollable */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 10px;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* إخفاء شريط التمرير مع الاحتفاظ بالوظيفة */
+        .content-area::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: #2a5298;
+            border-radius: 3px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            color: #1e3c72;
+            margin-bottom: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-right: 3px solid #2a5298;
+            padding-right: 8px;
+        }
+
+        /* Input groups */
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 3px;
+            color: #1e3c72;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .input-group textarea {
+            min-height: 60px;
+            resize: none;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 5px 0;
+            -webkit-appearance: none;
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            width: auto;
+            border-radius: 10px;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78 0%, #2f855a 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ecc94b 0%, #b7791f 100%);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        /* Measurement tabs */
+        .measurement-type-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .type-tab {
+            flex: 1;
+            padding: 8px 5px;
+            border: none;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #555;
+            border: 1px solid #dee2e6;
+            min-width: 70px;
+        }
+
+        .type-tab.active {
+            background: #2a5298;
+            color: white;
+            border-color: #2a5298;
+        }
+
+        /* Measurement fields */
+        .measurement-fields {
+            display: none;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .measurement-fields.active {
+            display: block;
+        }
+
+        /* Lists */
+        .customers-list, .orders-list {
+            max-height: 300px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .customer-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .customer-item:active {
+            background: #e9ecef;
+        }
+
+        .customer-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .customer-phone {
+            color: #666;
+            font-size: 0.8rem;
+            margin: 3px 0;
+        }
+
+        .measurement-badges {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge.dishdasha { background: #667eea20; color: #667eea; }
+        .badge.shirt { background: #48bb7820; color: #2f855a; }
+        .badge.pants { background: #f5656520; color: #c53030; }
+
+        /* Order items مع أزرار التقدم */
+        .order-item {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .order-customer {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .order-badge {
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .badge-pending { background: #f5656520; color: #c53030; }
+        .badge-cutting { background: #4299e120; color: #2b6cb0; }
+        .badge-sewing { background: #ed893620; color: #dd6b20; }
+        .badge-buttons { background: #9f7aea20; color: #6b46c1; }
+        .badge-ironing { background: #48bb7820; color: #2f855a; }
+        .badge-completed { background: #38b2ac20; color: #319795; }
+        .badge-delivered { background: #a0aec020; color: #4a5568; }
+
+        /* أزرار التقدم والواتساب */
+        .progress-buttons {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .progress-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #48bb78 0%, #2f855a 100%);
+            color: white;
+        }
+
+        .complete-btn {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+        }
+
+        .deliver-btn {
+            background: linear-gradient(135deg, #9f7aea 0%, #6b46c1 100%);
+            color: white;
+        }
+
+        /* Timeline */
+        .enhanced-timeline {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .timeline-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .timeline-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: #dee2e6;
+        }
+
+        .timeline-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-marker {
+            width: 30px;
+            height: 30px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 5px;
+            font-size: 0.9rem;
+        }
+
+        .timeline-step.completed .step-marker {
+            background: #48bb78;
+            border-color: #48bb78;
+            color: white;
+        }
+
+        .timeline-step.active .step-marker {
+            background: #2a5298;
+            border-color: #2a5298;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        /* Debt card */
+        .customer-debt-card {
+            background: #fff5f5;
+            border: 1px solid #fc8181;
+            border-radius: 15px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .debt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #fc8181;
+        }
+
+        .debt-customer-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #c53030;
+        }
+
+        .total-debt-badge {
+            background: #c53030;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Warning */
+        .previous-debt-warning {
+            background: #fefcbf;
+            border: 1px solid #ecc94b;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 25px;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        /* Measurement options */
+        .measurement-option {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            background: white;
+        }
+
+        .measurement-option.selected {
+            border-color: #2a5298;
+            background: #e6f7ff;
+        }
+
+        .measurement-option:active {
+            background: #e9ecef;
+        }
+
+        /* Search box */
+        .search-box {
+            margin-bottom: 12px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 0.9rem;
+        }
+
+        /* Total debt */
+        .total-debt-card {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .total-debt-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header ثابت -->
+        <div class="header">
+            <button class="settings-btn" onclick="openSettings()">⚙️</button>
+            <h1>🧵 خياطة ابو حيدر</h1>
+            <p>نظام متكامل - العراق</p>
+            <div class="currency-badge">💰 دينار عراقي</div>
+        </div>
+
+        <!-- Tabs ثابتة -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('customers')">
+                <span class="icon">👥</span>
+                <span>العملاء</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('new-order')">
+                <span class="icon">➕</span>
+                <span>طلب</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('orders')">
+                <span class="icon">📋</span>
+                <span>الطلبات</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('tracking')">
+                <span class="icon">🔍</span>
+                <span>متابعة</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('debts')">
+                <span class="icon">💰</span>
+                <span>الديون</span>
+            </button>
+        </div>
+
+        <!-- Content Area - Scrollable -->
+        <div class="content-area" id="contentArea">
+            <!-- Settings Modal -->
+            <div id="settingsModal" class="modal">
+                <div class="modal-content">
+                    <h3 style="color:#1e3c72; margin-bottom:15px;">⚙️ الإعدادات</h3>
+                    <div class="input-group">
+                        <label>👔 مهدي (عامل الأزرار)</label>
+                        <input type="text" id="buttonsWorker" value="964">
+                    </div>
+                    <div class="input-group">
+                        <label>🔥 ضرغام (عامل الكوي)</label>
+                        <input type="text" id="ironingWorker" value="964">
+                    </div>
+                    <button class="btn" onclick="saveWorkerSettings()">حفظ</button>
+                    <button class="btn" style="background:#666; margin-top:8px;" onclick="closeSettings()">إغلاق</button>
+                </div>
+            </div>
+
+            <!-- Customers Tab -->
+            <div id="customers-tab" class="tab-content active">
+                <div class="card">
+                    <div class="card-title">👤 إضافة عميل</div>
+                    <div class="input-group">
+                        <label>الاسم</label>
+                        <input type="text" id="customerName" placeholder="اسم العميل">
+                    </div>
+                    <div class="input-group">
+                        <label>رقم الهاتف</label>
+                        <input type="text" id="customerPhone" placeholder="رقم الهاتف">
+                    </div>
+
+                    <!-- قياسات متعددة -->
+                    <div style="background:#f8f9fa; padding:10px; border-radius:12px; margin:10px 0;">
+                        <div style="font-weight:600; margin-bottom:8px;">📏 إضافة قياسات</div>
+                        
+                        <div class="measurement-type-tabs">
+                            <button class="type-tab active" onclick="showMeasurementType('dishdasha')">دشداشة</button>
+                            <button class="type-tab" onclick="showMeasurementType('shirt')">قميص</button>
+                            <button class="type-tab" onclick="showMeasurementType('pants')">بنطلون</button>
+                        </div>
+
+                        <!-- دشداشة -->
+                        <div id="dishdasha-fields" class="measurement-fields active">
+                            <div class="input-group">
+                                <label>الياخة (سم)</label>
+                                <input type="number" id="dishdasha_yakhah" placeholder="40">
+                            </div>
+                            <div class="input-group">
+                                <label>الكتف (سم)</label>
+                                <input type="number" id="dishdasha_katf" placeholder="45">
+                            </div>
+                            <div class="input-group">
+                                <label>الردان (سم)</label>
+                                <input type="number" id="dishdasha_radan" placeholder="60">
+                            </div>
+                            <div class="input-group">
+                                <label>الصدر (سم)</label>
+                                <input type="number" id="dishdasha_sadr" placeholder="50">
+                            </div>
+                            <div class="input-group">
+                                <label>الطول (سم)</label>
+                                <input type="number" id="dishdasha_toul" placeholder="140">
+                            </div>
+                            <button class="btn-small" onclick="addMeasurement('dishdasha')" style="width:100%;">➕ إضافة قياس</button>
+                        </div>
+
+                        <!-- قميص -->
+                        <div id="shirt-fields" class="measurement-fields">
+                            <div class="input-group">
+                                <label>الياخة (سم)</label>
+                                <input type="number" id="shirt_yakhah" placeholder="38">
+                            </div>
+                            <div class="input-group">
+                                <label>الكتف (سم)</label>
+                                <input type="number" id="shirt_katf" placeholder="42">
+                            </div>
+                            <div class="input-group">
+                                <label>الكم (سم)</label>
+                                <input type="number" id="shirt_kom" placeholder="60">
+                            </div>
+                            <div class="input-group">
+                                <label>الصدر (سم)</label>
+                                <input type="number" id="shirt_sadr" placeholder="48">
+                            </div>
+                            <div class="input-group">
+                                <label>الطول (سم)</label>
+                                <input type="number" id="shirt_toul" placeholder="75">
+                            </div>
+                            <button class="btn-small" onclick="addMeasurement('shirt')" style="width:100%;">➕ إضافة قياس</button>
+                        </div>
+
+                        <!-- بنطلون -->
+                        <div id="pants-fields" class="measurement-fields">
+                            <div class="input-group">
+                                <label>الخصر (سم)</label>
+                                <input type="number" id="pants_khasr" placeholder="80">
+                            </div>
+                            <div class="input-group">
+                                <label>الطول (سم)</label>
+                                <input type="number" id="pants_toul" placeholder="105">
+                            </div>
+                            <div class="input-group">
+                                <label>الردف (سم)</label>
+                                <input type="number" id="pants_radf" placeholder="100">
+                            </div>
+                            <div class="input-group">
+                                <label>الركبة (سم)</label>
+                                <input type="number" id="pants_rokba" placeholder="45">
+                            </div>
+                            <button class="btn-small" onclick="addMeasurement('pants')" style="width:100%;">➕ إضافة قياس</button>
+                        </div>
+
+                        <!-- قائمة القياسات المضافة -->
+                        <div id="measurementsList" style="margin-top:10px;"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>ملاحظات</label>
+                        <textarea id="customerNotes" rows="2" placeholder="ملاحظات..."></textarea>
+                    </div>
+
+                    <button class="btn" onclick="saveCustomer()">💾 حفظ العميل</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">📋 قائمة العملاء</div>
+                    <div class="search-box">
+                        <input type="text" id="searchCustomer" placeholder="بحث..." onkeyup="searchCustomers()">
+                    </div>
+                    <div id="customersList" class="customers-list"></div>
+                </div>
+            </div>
+
+            <!-- New Order Tab -->
+            <div id="new-order-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-title">➕ طلب جديد</div>
+                    
+                    <div class="input-group">
+                        <label>العميل</label>
+                        <select id="orderCustomer" onchange="loadCustomerMeasurements()">
+                            <option value="">اختر عميل...</option>
+                        </select>
+                    </div>
+                    
+                    <div id="previousDebtWarning" style="display:none;" class="previous-debt-warning">
+                        <span>⚠️ دين سابق:</span>
+                        <span class="previous-debt-amount" id="previousDebtAmount">0 د.ع</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label>نوع القطعة</label>
+                        <select id="orderType" onchange="showMeasurements()">
+                            <option value="">اختر النوع...</option>
+                        </select>
+                    </div>
+
+                    <!-- قائمة القياسات للاختيار -->
+                    <div id="measurementsSelection" style="display:none; background:#f8f9fa; padding:10px; border-radius:12px; margin:10px 0;">
+                        <div style="font-weight:600; margin-bottom:8px;">📏 اختر القياس:</div>
+                        <div id="measurementsOptions"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>🧵 نوع القماش</label>
+                        <input type="text" id="fabricType" placeholder="نوع القماش">
+                    </div>
+
+                    <div class="input-group">
+                        <label>🎨 اللون</label>
+                        <input type="text" id="colorType" placeholder="اللون">
+                    </div>
+
+                    <div class="input-group">
+                        <label>💰 المبلغ</label>
+                        <input type="number" id="orderAmount" placeholder="المبلغ">
+                    </div>
+
+                    <div class="input-group">
+                        <label>💳 المدفوع</label>
+                        <input type="number" id="orderPaid" placeholder="المدفوع" value="0">
+                    </div>
+
+                    <div class="input-group">
+                        <label>📝 ملاحظات</label>
+                        <textarea id="orderNotes" rows="2" placeholder="ملاحظات..."></textarea>
+                    </div>
+                    
+                    <button class="btn" onclick="createOrder()">➕ إنشاء الطلب</button>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="orders-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-title">📋 جميع الطلبات</div>
+                    <div class="search-box">
+                        <input type="text" id="searchOrders" placeholder="بحث..." onkeyup="searchOrders()">
+                    </div>
+                    <div id="ordersList" class="orders-list"></div>
+                </div>
+            </div>
+
+            <!-- Tracking Tab مع أزرار التقدم والواتساب -->
+            <div id="tracking-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-title">🔍 متابعة التصنيع</div>
+                    <div style="display:flex; gap:3px; flex-wrap:wrap; margin-bottom:10px;">
+                        <button class="btn-small" onclick="filterTracking('all')">الكل</button>
+                        <button class="btn-small" onclick="filterTracking('pending')">انتظار</button>
+                        <button class="btn-small" onclick="filterTracking('cutting')">قص</button>
+                        <button class="btn-small" onclick="filterTracking('sewing')">خياطة</button>
+                        <button class="btn-small" onclick="filterTracking('buttons')">أزرار</button>
+                        <button class="btn-small" onclick="filterTracking('ironing')">كوي</button>
+                        <button class="btn-small" onclick="filterTracking('completed')">مكتمل</button>
+                        <button class="btn-small" onclick="filterTracking('delivered')">مسلم</button>
+                    </div>
+                    <div id="trackingList" class="orders-list"></div>
+                </div>
+            </div>
+
+            <!-- Debts Tab -->
+            <div id="debts-tab" class="tab-content">
+                <div class="total-debt-card">
+                    <div>💰 إجمالي الديون</div>
+                    <div class="total-debt-amount" id="totalDebt">0 د.ع</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">📊 الديون التراكمية</div>
+                    <div id="cumulativeDebtsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // البيانات
+        let customers = JSON.parse(localStorage.getItem('customers')) || [];
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        
+        // إعدادات العمال
+        let workerSettings = JSON.parse(localStorage.getItem('workerSettings')) || {
+            buttons: '964',
+            ironing: '964'
+        };
+
+        // متغيرات مؤقتة
+        let tempMeasurements = [];
+        let selectedMeasurementIndex = null;
+        let currentCustomerDebt = 0;
+
+        // تهيئة
+        function init() {
+            loadWorkerSettings();
+            updateCustomersList();
+            updateCustomerSelect();
+            updateOrdersList();
+            updateTrackingList();
+            updateCumulativeDebts();
+        }
+
+        // إظهار نوع القياس
+        function showMeasurementType(type) {
+            document.querySelectorAll('.type-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.measurement-fields').forEach(field => field.classList.remove('active'));
+            document.getElementById(type + '-fields').classList.add('active');
+        }
+
+        // إضافة قياس
+        function addMeasurement(type) {
+            let measurement = { type: type };
+
+            if (type === 'dishdasha') {
+                measurement.yakhah = document.getElementById('dishdasha_yakhah').value || '---';
+                measurement.katf = document.getElementById('dishdasha_katf').value || '---';
+                measurement.radan = document.getElementById('dishdasha_radan').value || '---';
+                measurement.sadr = document.getElementById('dishdasha_sadr').value || '---';
+                measurement.toul = document.getElementById('dishdasha_toul').value || '---';
+                
+                if (measurement.yakhah === '---' && measurement.katf === '---' && 
+                    measurement.radan === '---' && measurement.sadr === '---' && 
+                    measurement.toul === '---') {
+                    alert('الرجاء إدخال قيم القياسات');
+                    return;
+                }
+
+                document.getElementById('dishdasha_yakhah').value = '';
+                document.getElementById('dishdasha_katf').value = '';
+                document.getElementById('dishdasha_radan').value = '';
+                document.getElementById('dishdasha_sadr').value = '';
+                document.getElementById('dishdasha_toul').value = '';
+            }
+            else if (type === 'shirt') {
+                measurement.yakhah = document.getElementById('shirt_yakhah').value || '---';
+                measurement.katf = document.getElementById('shirt_katf').value || '---';
+                measurement.kom = document.getElementById('shirt_kom').value || '---';
+                measurement.sadr = document.getElementById('shirt_sadr').value || '---';
+                measurement.toul = document.getElementById('shirt_toul').value || '---';
+                
+                if (measurement.yakhah === '---' && measurement.katf === '---' && 
+                    measurement.kom === '---' && measurement.sadr === '---' && 
+                    measurement.toul === '---') {
+                    alert('الرجاء إدخال قيم القياسات');
+                    return;
+                }
+
+                document.getElementById('shirt_yakhah').value = '';
+                document.getElementById('shirt_katf').value = '';
+                document.getElementById('shirt_kom').value = '';
+                document.getElementById('shirt_sadr').value = '';
+                document.getElementById('shirt_toul').value = '';
+            }
+            else if (type === 'pants') {
+                measurement.khasr = document.getElementById('pants_khasr').value || '---';
+                measurement.toul = document.getElementById('pants_toul').value || '---';
+                measurement.radf = document.getElementById('pants_radf').value || '---';
+                measurement.rokba = document.getElementById('pants_rokba').value || '---';
+                
+                if (measurement.khasr === '---' && measurement.toul === '---' && 
+                    measurement.radf === '---' && measurement.rokba === '---') {
+                    alert('الرجاء إدخال قيم القياسات');
+                    return;
+                }
+
+                document.getElementById('pants_khasr').value = '';
+                document.getElementById('pants_toul').value = '';
+                document.getElementById('pants_radf').value = '';
+                document.getElementById('pants_rokba').value = '';
+            }
+
+            tempMeasurements.push(measurement);
+            displayMeasurements();
+        }
+
+        // عرض القياسات المضافة
+        function displayMeasurements() {
+            const list = document.getElementById('measurementsList');
+            if (!list) return;
+
+            list.innerHTML = '<div style="font-weight:600; margin:5px 0;">القياسات المضافة:</div>';
+            
+            if (tempMeasurements.length === 0) {
+                list.innerHTML += '<p style="color:#666; font-size:0.8rem;">لا توجد قياسات</p>';
+                return;
+            }
+
+            tempMeasurements.forEach((m, index) => {
+                const div = document.createElement('div');
+                div.style.cssText = 'background:white; padding:8px; border-radius:8px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center; font-size:0.75rem;';
+                
+                let details = '';
+                if (m.type === 'dishdasha') {
+                    details = `دشداشة: ياخة ${m.yakhah} | كتف ${m.katf} | ردان ${m.radan} | صدر ${m.sadr} | طول ${m.toul}`;
+                } else if (m.type === 'shirt') {
+                    details = `قميص: ياخة ${m.yakhah} | كتف ${m.katf} | كم ${m.kom} | صدر ${m.sadr} | طول ${m.toul}`;
+                } else {
+                    details = `بنطلون: خصر ${m.khasr} | طول ${m.toul} | ردف ${m.radf} | ركبة ${m.rokba}`;
+                }
+                
+                div.innerHTML = `
+                    <span>${details}</span>
+                    <button onclick="removeMeasurement(${index})" style="background:#ff4444; color:white; border:none; width:24px; height:24px; border-radius:50%; cursor:pointer;">×</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // حذف قياس
+        function removeMeasurement(index) {
+            tempMeasurements.splice(index, 1);
+            displayMeasurements();
+        }
+
+        // حفظ العميل
+        function saveCustomer() {
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const notes = document.getElementById('customerNotes').value;
+
+            if (!name || !phone) {
+                alert('الرجاء إدخال الاسم ورقم الهاتف');
+                return;
+            }
+
+            if (tempMeasurements.length === 0) {
+                alert('الرجاء إضافة قياس واحد على الأقل');
+                return;
+            }
+
+            const customer = {
+                id: Date.now(),
+                name,
+                phone,
+                measurements: tempMeasurements,
+                notes,
+                date: new Date().toLocaleDateString('ar-EG')
+            };
+
+            customers.push(customer);
+            localStorage.setItem('customers', JSON.stringify(customers));
+            
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerNotes').value = '';
+            tempMeasurements = [];
+            displayMeasurements();
+            
+            updateCustomersList();
+            updateCustomerSelect();
+            alert('تم إضافة العميل بنجاح');
+        }
+
+        // تحديث قائمة العملاء
+        function updateCustomersList() {
+            const list = document.getElementById('customersList');
+            if (!list) return;
+
+            list.innerHTML = '';
+            customers.forEach(customer => {
+                const div = document.createElement('div');
+                div.className = 'customer-item';
+                div.onclick = () => showCustomerDetails(customer.id);
+                
+                const types = {};
+                customer.measurements.forEach(m => {
+                    types[m.type] = (types[m.type] || 0) + 1;
+                });
+
+                let badges = '';
+                for (let type in types) {
+                    badges += `<span class="badge ${type}">${getTypeName(type)} (${types[type]})</span>`;
+                }
+
+                div.innerHTML = `
+                    <div class="customer-name">${customer.name}</div>
+                    <div class="customer-phone">📞 ${customer.phone}</div>
+                    <div class="measurement-badges">${badges}</div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // عرض تفاصيل العميل
+        function showCustomerDetails(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (!customer) return;
+
+            let details = `العميل: ${customer.name}\nهاتف: ${customer.phone}\n`;
+            details += `القياسات (${customer.measurements.length}):\n`;
+
+            customer.measurements.forEach((m, i) => {
+                details += `\n${i+1}. `;
+                if (m.type === 'dishdasha') {
+                    details += `دشداشة: ياخة ${m.yakhah} | كتف ${m.katf} | ردان ${m.radan} | صدر ${m.sadr} | طول ${m.toul}`;
+                } else if (m.type === 'shirt') {
+                    details += `قميص: ياخة ${m.yakhah} | كتف ${m.katf} | كم ${m.kom} | صدر ${m.sadr} | طول ${m.toul}`;
+                } else {
+                    details += `بنطلون: خصر ${m.khasr} | طول ${m.toul} | ردف ${m.radf} | ركبة ${m.rokba}`;
+                }
+            });
+
+            alert(details);
+        }
+
+        // البحث في العملاء
+        function searchCustomers() {
+            const searchTerm = document.getElementById('searchCustomer').value.toLowerCase();
+            const filtered = customers.filter(c => 
+                c.name.toLowerCase().includes(searchTerm) || 
+                c.phone.includes(searchTerm)
+            );
+            
+            const list = document.getElementById('customersList');
+            list.innerHTML = '';
+            filtered.forEach(customer => {
+                const div = document.createElement('div');
+                div.className = 'customer-item';
+                div.onclick = () => showCustomerDetails(customer.id);
+                
+                const types = {};
+                customer.measurements.forEach(m => {
+                    types[m.type] = (types[m.type] || 0) + 1;
+                });
+
+                let badges = '';
+                for (let type in types) {
+                    badges += `<span class="badge ${type}">${getTypeName(type)} (${types[type]})</span>`;
+                }
+
+                div.innerHTML = `
+                    <div class="customer-name">${customer.name}</div>
+                    <div class="customer-phone">📞 ${customer.phone}</div>
+                    <div class="measurement-badges">${badges}</div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // حساب إجمالي ديون العميل
+        function getCustomerTotalDebt(customerId) {
+            return orders.filter(o => o.customerId == customerId).reduce((sum, o) => sum + (o.debt || 0), 0);
+        }
+
+        // تحميل قياسات العميل
+        function loadCustomerMeasurements() {
+            const customerId = document.getElementById('orderCustomer').value;
+            if (!customerId) {
+                document.getElementById('orderType').innerHTML = '<option value="">اختر النوع...</option>';
+                document.getElementById('measurementsSelection').style.display = 'none';
+                return;
+            }
+
+            const customer = customers.find(c => c.id == customerId);
+            if (!customer) return;
+
+            const types = [...new Set(customer.measurements.map(m => m.type))];
+            
+            const typeSelect = document.getElementById('orderType');
+            typeSelect.innerHTML = '<option value="">اختر النوع...</option>';
+            types.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = getTypeName(type);
+                typeSelect.appendChild(option);
+            });
+
+            const totalDebt = getCustomerTotalDebt(customerId);
+            const warningDiv = document.getElementById('previousDebtWarning');
+            if (totalDebt > 0) {
+                warningDiv.style.display = 'flex';
+                document.getElementById('previousDebtAmount').textContent = totalDebt.toLocaleString() + ' د.ع';
+            } else {
+                warningDiv.style.display = 'none';
+            }
+            
+            document.getElementById('measurementsSelection').style.display = 'none';
+            selectedMeasurementIndex = null;
+        }
+
+        // عرض القياسات للاختيار
+        function showMeasurements() {
+            const customerId = document.getElementById('orderCustomer').value;
+            const type = document.getElementById('orderType').value;
+            
+            if (!customerId || !type) {
+                document.getElementById('measurementsSelection').style.display = 'none';
+                return;
+            }
+            
+            const customer = customers.find(c => c.id == customerId);
+            if (!customer) return;
+
+            const measurements = customer.measurements.filter(m => m.type === type);
+            
+            if (measurements.length === 0) {
+                document.getElementById('measurementsSelection').style.display = 'none';
+                alert('لا توجد قياسات لهذا النوع');
+                return;
+            }
+
+            document.getElementById('measurementsSelection').style.display = 'block';
+            const optionsDiv = document.getElementById('measurementsOptions');
+            
+            let html = '';
+            measurements.forEach((m, index) => {
+                let details = '';
+                if (type === 'dishdasha') {
+                    details = `ياخة: ${m.yakhah} | كتف: ${m.katf} | ردان: ${m.radan} | صدر: ${m.sadr} | طول: ${m.toul}`;
+                } else if (type === 'shirt') {
+                    details = `ياخة: ${m.yakhah} | كتف: ${m.katf} | كم: ${m.kom} | صدر: ${m.sadr} | طول: ${m.toul}`;
+                } else {
+                    details = `خصر: ${m.khasr} | طول: ${m.toul} | ردف: ${m.radf} | ركبة: ${m.rokba}`;
+                }
+                
+                html += `<div class="measurement-option" onclick="selectMeasurement(${index})">قياس ${index+1}: ${details}</div>`;
+            });
+            
+            optionsDiv.innerHTML = html;
+            selectedMeasurementIndex = null;
+        }
+
+        function selectMeasurement(index) {
+            selectedMeasurementIndex = index;
+            document.querySelectorAll('.measurement-option').forEach(el => el.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+
+        // إنشاء طلب
+        function createOrder() {
+            const customerId = document.getElementById('orderCustomer').value;
+            const type = document.getElementById('orderType').value;
+            const fabric = document.getElementById('fabricType').value;
+            const color = document.getElementById('colorType').value;
+            const amount = parseFloat(document.getElementById('orderAmount').value) || 0;
+            const paid = parseFloat(document.getElementById('orderPaid').value) || 0;
+            const notes = document.getElementById('orderNotes').value;
+
+            if (!customerId || !type || selectedMeasurementIndex === null || !fabric || !color) {
+                alert('الرجاء إكمال جميع البيانات');
+                return;
+            }
+
+            const customer = customers.find(c => c.id == customerId);
+            if (!customer) return;
+
+            const measurementsOfType = customer.measurements.filter(m => m.type === type);
+            const measurement = measurementsOfType[selectedMeasurementIndex];
+
+            const order = {
+                id: Date.now(),
+                customerId: parseInt(customerId),
+                customerName: customer.name,
+                customerPhone: customer.phone,
+                type,
+                measurement,
+                fabric,
+                color,
+                amount,
+                paid,
+                debt: amount - paid,
+                notes,
+                status: 'pending',
+                date: new Date().toLocaleDateString('ar-EG'),
+                timeline: {
+                    pending: new Date().toISOString(),
+                    cutting: null,
+                    sewing: null,
+                    buttons: null,
+                    ironing: null,
+                    completed: null,
+                    delivered: null
+                }
+            };
+
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            document.getElementById('orderAmount').value = '';
+            document.getElementById('orderPaid').value = '0';
+            document.getElementById('orderNotes').value = '';
+            document.getElementById('fabricType').value = '';
+            document.getElementById('colorType').value = '';
+            document.getElementById('measurementsSelection').style.display = 'none';
+            document.getElementById('orderType').innerHTML = '<option value="">اختر النوع...</option>';
+            
+            selectedMeasurementIndex = null;
+            
+            updateOrdersList();
+            updateTrackingList();
+            updateCumulativeDebts();
+            alert('تم إنشاء الطلب بنجاح');
+            switchTab('orders');
+        }
+
+        // تحديث قائمة العملاء في الطلب
+        function updateCustomerSelect() {
+            const select = document.getElementById('orderCustomer');
+            if (!select) return;
+            select.innerHTML = '<option value="">اختر عميل...</option>' + 
+                customers.map(c => `<option value="${c.id}">${c.name} - ${c.phone}</option>`).join('');
+        }
+
+        // تبديل التبويبات
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            event.target.closest('.tab-btn').classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            if (tabName === 'new-order') updateCustomerSelect();
+            if (tabName === 'tracking') updateTrackingList();
+            if (tabName === 'debts') updateCumulativeDebts();
+            
+            // Scroll to top
+            document.querySelector('.content-area').scrollTop = 0;
+        }
+
+        function getTypeName(type) {
+            return {'dishdasha':'دشداشة','shirt':'قميص','pants':'بنطلون'}[type]||type;
+        }
+
+        function getStatusName(status) {
+            const names = {
+                'pending':'انتظار','cutting':'قص','sewing':'خياطة',
+                'buttons':'أزرار','ironing':'كوي','completed':'مكتمل','delivered':'مسلم'
+            };
+            return names[status]||status;
+        }
+
+        function getStatusIcon(status) {
+            const icons = {
+                'pending':'⏳','cutting':'✂️','sewing':'🧵',
+                'buttons':'🔘','ironing':'🔥','completed':'✅','delivered':'📦'
+            };
+            return icons[status]||'📌';
+        }
+
+        // تحديث قائمة الطلبات
+        function updateOrdersList(filter = '') {
+            const list = document.getElementById('ordersList');
+            if (!list) return;
+
+            let filteredOrders = orders;
+            if (filter) {
+                filteredOrders = orders.filter(o => o.customerName.includes(filter) || o.id.toString().includes(filter));
+            }
+
+            list.innerHTML = '';
+            filteredOrders.reverse().forEach(order => {
+                const div = document.createElement('div');
+                div.className = 'order-item';
+                
+                div.innerHTML = `
+                    <div class="order-header">
+                        <span class="order-customer">${order.customerName}</span>
+                        <span class="order-badge badge-${order.status}">${getStatusName(order.status)}</span>
+                    </div>
+                    <div style="font-size:0.8rem;">
+                        <div>📏 ${getTypeName(order.type)}</div>
+                        <div>🧵 ${order.fabric} | 🎨 ${order.color}</div>
+                        <div>💰 ${order.amount.toLocaleString()} د.ع | متبقي: <span style="color:${order.debt>0?'#c53030':'#48bb78'}">${order.debt.toLocaleString()} د.ع</span></div>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // تحديث قائمة المتابعة مع أزرار التقدم والواتساب
+        function updateTrackingList(filter = 'all') {
+            const list = document.getElementById('trackingList');
+            if (!list) return;
+
+            let filteredOrders = orders.filter(o => o.status !== 'delivered');
+            if (filter !== 'all') {
+                filteredOrders = filteredOrders.filter(o => o.status === filter);
+            }
+
+            list.innerHTML = '';
+            if (filteredOrders.length === 0) {
+                list.innerHTML = '<p style="text-align:center; color:#666;">لا توجد طلبات في هذه المرحلة</p>';
+                return;
+            }
+
+            filteredOrders.reverse().forEach(order => {
+                const div = document.createElement('div');
+                div.className = 'order-item';
+                
+                // إنشاء أزرار التقدم حسب المرحلة
+                let actionButtons = '';
+                
+                if (order.status === 'buttons') {
+                    // مرحلة الأزرار: زر واتساب لمهدي + زر تقدم
+                    actionButtons = `
+                        <div class="progress-buttons">
+                            <button class="progress-btn whatsapp-btn" onclick="sendWhatsApp('buttons', ${order.id})">
+                                <span>📱</span> إرسال لمهدي
+                            </button>
+                            <button class="progress-btn next-btn" onclick="advanceOrder(${order.id})">
+                                <span>⏩</span> إلى الكوي
+                            </button>
+                        </div>
+                    `;
+                } else if (order.status === 'ironing') {
+                    // مرحلة الكوي: زر واتساب لضرغام + زر تقدم
+                    actionButtons = `
+                        <div class="progress-buttons">
+                            <button class="progress-btn whatsapp-btn" onclick="sendWhatsApp('ironing', ${order.id})">
+                                <span>📱</span> إرسال لضرغام
+                            </button>
+                            <button class="progress-btn next-btn" onclick="advanceOrder(${order.id})">
+                                <span>⏩</span> اكتمال
+                            </button>
+                        </div>
+                    `;
+                } else if (order.status === 'completed') {
+                    // مرحلة مكتمل: زر تسليم
+                    actionButtons = `
+                        <div class="progress-buttons">
+                            <button class="progress-btn deliver-btn" onclick="deliverOrder(${order.id})">
+                                <span>🚚</span> تسليم للعميل
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    // باقي المراحل: زر تقدم فقط
+                    actionButtons = `
+                        <div class="progress-buttons">
+                            <button class="progress-btn next-btn" onclick="advanceOrder(${order.id})">
+                                <span>⏩</span> تقدم للمرحلة التالية
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                div.innerHTML = `
+                    <div class="order-header">
+                        <span class="order-customer">${order.customerName}</span>
+                        <span class="order-badge badge-${order.status}">${getStatusName(order.status)}</span>
+                    </div>
+                    <div style="font-size:0.8rem; margin-bottom:8px;">
+                        <div>📏 ${getTypeName(order.type)} | 🧵 ${order.fabric} | 🎨 ${order.color}</div>
+                        <div>💰 المبلغ: ${order.amount.toLocaleString()} د.ع | متبقي: ${order.debt.toLocaleString()} د.ع</div>
+                    </div>
+                    ${actionButtons}
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // تقدم الطلب للمرحلة التالية
+        function advanceOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const stages = ['pending', 'cutting', 'sewing', 'buttons', 'ironing', 'completed'];
+            const currentIndex = stages.indexOf(order.status);
+            
+            if (currentIndex < stages.length - 1) {
+                const nextStage = stages[currentIndex + 1];
+                
+                // تأكيد قبل التقدم
+                if (confirm(`هل تريد نقل الطلب إلى مرحلة ${getStatusName(nextStage)}؟`)) {
+                    order.status = nextStage;
+                    order.timeline[nextStage] = new Date().toISOString();
+                    
+                    localStorage.setItem('orders', JSON.stringify(orders));
+                    updateTrackingList();
+                    updateOrdersList();
+                    
+                    alert(`تم نقل الطلب إلى مرحلة: ${getStatusName(nextStage)}`);
+                }
+            }
+        }
+
+        // إرسال رسالة واتساب
+        function sendWhatsApp(workerType, orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const workerNumber = workerSettings[workerType];
+            const workerName = workerType === 'buttons' ? 'مهدي' : 'ضرغام';
+            
+            if (!workerNumber || workerNumber === '964') {
+                alert('الرجاء إدخال رقم العامل في الإعدادات أولاً');
+                openSettings();
+                return;
+            }
+
+            let message = '';
+            if (workerType === 'buttons') {
+                message = `🔔 سلام عليكم مهدي، قطعة جاهزة للأزرار/الدكم:\n`;
+                message += `العميل: ${order.customerName}\n`;
+                message += `النوع: ${getTypeName(order.type)}\n`;
+                message += `القياسات: ${getMeasurementText(order.measurement)}\n`;
+                message += `القماش: ${order.fabric}\n`;
+                message += `اللون: ${order.color}\n`;
+                message += `- خياطة ابو حيدر`;
+            } else {
+                message = `🔔 سلام عليكم ضرغام، قطعة جاهزة للكوي:\n`;
+                message += `العميل: ${order.customerName}\n`;
+                message += `النوع: ${getTypeName(order.type)}\n`;
+                message += `تم الانتهاء من الأزرار\n`;
+                message += `القماش: ${order.fabric}\n`;
+                message += `اللون: ${order.color}\n`;
+                message += `- خياطة ابو حيدر`;
+            }
+
+            const whatsappUrl = `https://wa.me/${workerNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // تسليم القطعة
+        function deliverOrder(orderId) {
+            if (confirm('هل تم تسليم القطعة للعميل؟')) {
+                const order = orders.find(o => o.id === orderId);
+                if (order) {
+                    order.status = 'delivered';
+                    order.timeline.delivered = new Date().toISOString();
+                    localStorage.setItem('orders', JSON.stringify(orders));
+                    updateTrackingList();
+                    updateOrdersList();
+                    updateCumulativeDebts();
+                    alert('تم تسليم القطعة - الدين لا يزال مسجلاً');
+                }
+            }
+        }
+
+        // نص القياسات
+        function getMeasurementText(measurement) {
+            if (!measurement) return '';
+            if (measurement.type === 'dishdasha') {
+                return `ياخة: ${measurement.yakhah} | كتف: ${measurement.katf} | ردان: ${measurement.radan} | صدر: ${measurement.sadr} | طول: ${measurement.toul}`;
+            } else if (measurement.type === 'shirt') {
+                return `ياخة: ${measurement.yakhah} | كتف: ${measurement.katf} | كم: ${measurement.kom} | صدر: ${measurement.sadr} | طول: ${measurement.toul}`;
+            } else {
+                return `خصر: ${measurement.khasr} | طول: ${measurement.toul} | ردف: ${measurement.radf} | ركبة: ${measurement.rokba}`;
+            }
+        }
+
+        // تحديث الديون التراكمية
+        function updateCumulativeDebts() {
+            const list = document.getElementById('cumulativeDebtsList');
+            if (!list) return;
+
+            const customerDebts = {};
+            orders.forEach(order => {
+                if (order.debt > 0) {
+                    if (!customerDebts[order.customerId]) {
+                        customerDebts[order.customerId] = {
+                            customerId: order.customerId,
+                            customerName: order.customerName,
+                            totalDebt: 0,
+                            orders: []
+                        };
+                    }
+                    customerDebts[order.customerId].totalDebt += order.debt;
+                    customerDebts[order.customerId].orders.push({
+                        type: order.type,
+                        debt: order.debt,
+                        date: order.date,
+                        status: order.status
+                    });
+                }
+            });
+
+            const sortedDebts = Object.values(customerDebts).sort((a, b) => b.totalDebt - a.totalDebt);
+
+            if (sortedDebts.length === 0) {
+                list.innerHTML = '<p style="text-align:center; color:#666;">لا توجد ديون</p>';
+                return;
+            }
+
+            list.innerHTML = '';
+            sortedDebts.forEach(customer => {
+                const div = document.createElement('div');
+                div.className = 'customer-debt-card';
+                
+                const ordersList = customer.orders.map(o => 
+                    `<div style="font-size:0.75rem; padding:3px 0; ${o.status === 'delivered' ? 'color:#666;' : ''}">• ${getTypeName(o.type)}: ${o.debt.toLocaleString()} د.ع ${o.status === 'delivered' ? '(مسلم)' : ''}</div>`
+                ).join('');
+                
+                div.innerHTML = `
+                    <div class="debt-header">
+                        <span class="debt-customer-name">${customer.customerName}</span>
+                        <span class="total-debt-badge">${customer.totalDebt.toLocaleString()} د.ع</span>
+                    </div>
+                    <div>${ordersList}</div>
+                `;
+                list.appendChild(div);
+            });
+
+            const totalDebt = sortedDebts.reduce((sum, c) => sum + c.totalDebt, 0);
+            document.getElementById('totalDebt').textContent = totalDebt.toLocaleString() + ' د.ع';
+        }
+
+        // دوال الإعدادات
+        function loadWorkerSettings() {
+            document.getElementById('buttonsWorker').value = workerSettings.buttons;
+            document.getElementById('ironingWorker').value = workerSettings.ironing;
+        }
+
+        function saveWorkerSettings() {
+            workerSettings.buttons = document.getElementById('buttonsWorker').value;
+            workerSettings.ironing = document.getElementById('ironingWorker').value;
+            localStorage.setItem('workerSettings', JSON.stringify(workerSettings));
+            alert('تم الحفظ');
+            closeSettings();
+        }
+
+        function openSettings() {
+            document.getElementById('settingsModal').style.display = 'flex';
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').style.display = 'none';
+        }
+
+        function filterTracking(status) {
+            document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            updateTrackingList(status);
+        }
+
+        function searchOrders() {
+            updateOrdersList(document.getElementById('searchOrders').value);
+        }
+
+        // تهيئة
+        init();
+    </script>
+</body>
+</html>
