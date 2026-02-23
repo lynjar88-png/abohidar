@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>خياطة ابو حيدر - نظام متكامل</title>
     <style>
-        /* جميع الأنماط السابقة مع إضافة أزرار التقدم */
+        /* جميع الأنماط السابقة مع إضافة أنماط الطباعة */
         * {
             margin: 0;
             padding: 0;
@@ -191,6 +191,199 @@
             padding-right: 8px;
         }
 
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-card:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .stat-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .stat-card:nth-child(4) {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* Recent Orders */
+        .recent-order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.8rem;
+        }
+
+        .recent-order-item:last-child {
+            border-bottom: none;
+        }
+
+        .recent-order-name {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .recent-order-status {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        /* Report Cards */
+        .report-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .report-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .report-date {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .report-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .report-stat-item {
+            text-align: center;
+        }
+
+        .report-stat-label {
+            font-size: 0.7rem;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .report-stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .report-breakdown {
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Template Buttons */
+        .template-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .template-btn {
+            flex: 1;
+            min-width: 70px;
+            padding: 6px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: #f0f0f0;
+            color: #333;
+            transition: all 0.2s;
+        }
+
+        .template-btn.ready {
+            background: #48bb78;
+            color: white;
+        }
+
+        .template-btn.reminder {
+            background: #f6ad55;
+            color: white;
+        }
+
+        .template-btn.debt {
+            background: #f56565;
+            color: white;
+        }
+
+        .template-btn.delayed {
+            background: #9f7aea;
+            color: white;
+        }
+
+        .template-btn.print {
+            background: #4299e1;
+            color: white;
+        }
+
+        .template-btn:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
         /* Input groups */
         .input-group {
             margin-bottom: 12px;
@@ -257,6 +450,26 @@
             color: white;
         }
 
+        .btn-delete {
+            background: #ff4444;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #4299e1;
+            color: white;
+        }
+
+        .btn-pay {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-print {
+            background: #9f7aea;
+            color: white;
+        }
+
         /* Measurement tabs */
         .measurement-type-tabs {
             display: flex;
@@ -310,12 +523,7 @@
             border-radius: 12px;
             padding: 12px;
             margin-bottom: 8px;
-            cursor: pointer;
             border: 1px solid transparent;
-        }
-
-        .customer-item:active {
-            background: #e9ecef;
         }
 
         .customer-name {
@@ -423,6 +631,11 @@
 
         .deliver-btn {
             background: linear-gradient(135deg, #9f7aea 0%, #6b46c1 100%);
+            color: white;
+        }
+
+        .print-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
@@ -559,6 +772,31 @@
             overflow-y: auto;
         }
 
+        /* Payment Modal */
+        .payment-input-group {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+
+        .payment-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .order-debt-item {
+            background: #fff5f5;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            border-right: 3px solid #c53030;
+        }
+
         /* Measurement options */
         .measurement-option {
             padding: 10px;
@@ -607,6 +845,135 @@
             font-weight: 700;
             margin-top: 5px;
         }
+
+        /* Customer action buttons */
+        .customer-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .action-btn-small {
+            flex: 1;
+            padding: 6px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Reports Tab */
+        .reports-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* أنماط الطباعة */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-invoice, .print-invoice * {
+                visibility: visible;
+            }
+            .print-invoice {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+                background: white;
+                direction: rtl;
+            }
+        }
+
+        .print-invoice {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            max-width: 300px;
+            margin: 0 auto;
+            background: white;
+        }
+
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #1e3c72;
+        }
+
+        .invoice-header h2 {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .invoice-header p {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .invoice-info {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .invoice-info div {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .invoice-info strong {
+            color: #1e3c72;
+        }
+
+        .invoice-measurements {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #e6f7ff;
+            border-radius: 8px;
+            border-right: 3px solid #2a5298;
+        }
+
+        .invoice-measurements h4 {
+            color: #1e3c72;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .measurement-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .invoice-footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px dashed #1e3c72;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .barcode {
+            text-align: center;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
@@ -641,6 +1008,10 @@
                 <span class="icon">💰</span>
                 <span>الديون</span>
             </button>
+            <button class="tab-btn" onclick="switchTab('reports')">
+                <span class="icon">📊</span>
+                <span>التقارير</span>
+            </button>
         </div>
 
         <!-- Content Area - Scrollable -->
@@ -659,6 +1030,173 @@
                     </div>
                     <button class="btn" onclick="saveWorkerSettings()">حفظ</button>
                     <button class="btn" style="background:#666; margin-top:8px;" onclick="closeSettings()">إغلاق</button>
+                </div>
+            </div>
+
+            <!-- Payment Modal -->
+            <div id="paymentModal" class="modal">
+                <div class="modal-content">
+                    <h3 style="color:#1e3c72; margin-bottom:15px;">💰 تسديد دين</h3>
+                    <div id="paymentCustomerInfo" style="margin-bottom:15px;">
+                        <div style="font-weight:600; font-size:1.1rem;" id="paymentCustomerName"></div>
+                        <div style="color:#666;" id="paymentCustomerDebt"></div>
+                    </div>
+                    
+                    <div id="paymentOrdersList" style="max-height:200px; overflow-y:auto; margin-bottom:15px;"></div>
+                    
+                    <div class="payment-input-group">
+                        <label>المبلغ المراد تسديده (د.ع)</label>
+                        <input type="number" id="paymentAmount" class="payment-amount" placeholder="أدخل المبلغ" min="1000" step="1000">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>ملاحظات</label>
+                        <textarea id="paymentNotes" rows="2" placeholder="اختياري"></textarea>
+                    </div>
+                    
+                    <div style="display:flex; gap:5px; margin-top:15px;">
+                        <button class="btn" style="flex:2;" onclick="processPayment()">✅ تأكيد الدفع</button>
+                        <button class="btn" style="flex:1; background:#666;" onclick="closePaymentModal()">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Customer Modal -->
+            <div id="editCustomerModal" class="modal">
+                <div class="modal-content">
+                    <h3 style="color:#1e3c72; margin-bottom:15px;">✏️ تعديل بيانات العميل</h3>
+                    <input type="hidden" id="editCustomerId">
+                    
+                    <div class="input-group">
+                        <label>الاسم</label>
+                        <input type="text" id="editCustomerName" placeholder="اسم العميل">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>رقم الهاتف</label>
+                        <input type="text" id="editCustomerPhone" placeholder="رقم الهاتف">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>ملاحظات</label>
+                        <textarea id="editCustomerNotes" rows="2" placeholder="ملاحظات..."></textarea>
+                    </div>
+                    
+                    <div style="margin:15px 0;">
+                        <div style="font-weight:600; margin-bottom:8px;">📏 القياسات</div>
+                        <div id="editMeasurementsList" style="max-height:200px; overflow-y:auto;"></div>
+                    </div>
+                    
+                    <div style="display:flex; gap:5px;">
+                        <button class="btn" style="flex:2;" onclick="saveCustomerChanges()">💾 حفظ التعديلات</button>
+                        <button class="btn" style="flex:1; background:#666;" onclick="closeEditModal()">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports-tab" class="tab-content">
+                <!-- Dashboard سريع -->
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">الطلبات اليوم</div>
+                        <div class="stat-value" id="todayOrders">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">المتأخرة</div>
+                        <div class="stat-value" id="delayedOrders">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">قيد العمل</div>
+                        <div class="stat-value" id="inProgress">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">المسلمة</div>
+                        <div class="stat-value" id="deliveredCount">0</div>
+                    </div>
+                </div>
+
+                <!-- آخر 5 طلبات -->
+                <div class="dashboard-card">
+                    <div class="card-title">🆕 آخر 5 طلبات</div>
+                    <div id="recentOrdersList" style="max-height: 200px; overflow-y: auto;"></div>
+                </div>
+
+                <!-- التقارير -->
+                <div class="reports-container">
+                    <!-- التقرير اليومي -->
+                    <div class="report-card" id="dailyReport">
+                        <div class="report-header">
+                            <span class="report-title">📅 التقرير اليومي</span>
+                            <span class="report-date" id="dailyReportDate"></span>
+                        </div>
+                        <div class="report-stats">
+                            <div class="report-stat-item">
+                                <div class="report-stat-label">طلبات جديدة</div>
+                                <div class="report-stat-value" id="dailyNewOrders">0</div>
+                            </div>
+                            <div class="report-stat-item">
+                                <div class="report-stat-label">مكتملة</div>
+                                <div class="report-stat-value" id="dailyCompleted">0</div>
+                            </div>
+                            <div class="report-stat-item">
+                                <div class="report-stat-label">مسلمة</div>
+                                <div class="report-stat-value" id="dailyDelivered">0</div>
+                            </div>
+                        </div>
+                        <div class="report-stats">
+                            <div class="report-stat-item">
+                                <div class="report-stat-label">الإيرادات</div>
+                                <div class="report-stat-value" id="dailyIncome">0</div>
+                            </div>
+                            <div class="report-stat-item">
+                                <div class="report-stat-label">الديون</div>
+                                <div class="report-stat-value" id="dailyDebts">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- التقرير الشهري -->
+                    <div class="report-card" id="monthlyReport">
+                        <div class="report-header">
+                            <span class="report-title">📆 التقرير الشهري</span>
+                            <span class="report-date" id="monthlyReportDate"></span>
+                        </div>
+                        <div class="report-stats">
+                            <div class="report-stat-item">
+                                <div class="report-stat-label">إجمالي الطلبات</div>
+                                <div class="report-stat-value" id="monthlyTotalOrders">0</div>
+                            </div>
+                            <div class="report-stat-item">
+                                <div class="report-stat-label">الإيرادات</div>
+                                <div class="report-stat-value" id="monthlyIncome">0</div>
+                            </div>
+                            <div class="report-stat-item">
+                                <div class="report-stat-label">الديون</div>
+                                <div class="report-stat-value" id="monthlyDebts">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="report-breakdown">
+                            <div class="breakdown-item">
+                                <span>دشداشة</span>
+                                <span id="monthlyDishdasha">0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>قميص</span>
+                                <span id="monthlyShirt">0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>بنطلون</span>
+                                <span id="monthlyPants">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="report-actions">
+                        <button class="btn-small" onclick="refreshReports()" style="flex:1;">🔄 تحديث</button>
+                        <button class="btn-small btn-success" onclick="exportReports()" style="flex:1;">📥 تصدير</button>
+                    </div>
                 </div>
             </div>
 
@@ -847,7 +1385,7 @@
                 </div>
             </div>
 
-            <!-- Tracking Tab مع أزرار التقدم والواتساب -->
+            <!-- Tracking Tab مع أزرار التقدم والواتساب والطباعة -->
             <div id="tracking-tab" class="tab-content">
                 <div class="card">
                     <div class="card-title">🔍 متابعة التصنيع</div>
@@ -879,6 +1417,9 @@
         </div>
     </div>
 
+    <!-- عنصر الطباعة المخفي -->
+    <div id="printContainer" style="display:none;"></div>
+
     <script>
         // البيانات
         let customers = JSON.parse(localStorage.getItem('customers')) || [];
@@ -890,10 +1431,28 @@
             ironing: '964'
         };
 
+        // قوالب رسائل واتساب
+        const messageTemplates = {
+            ready: (order) => `السلام عليكم ${order.customerName}، 
+قطعتك (${getTypeName(order.type)}) جاهزة للاستلام.
+يرجى الحضور للمحل خلال 3 أيام.
+شكراً لثقتكم - خياطة ابو حيدر`,
+
+            reminder: (order) => `تذكير: طلبك ${getTypeName(order.type)} جاهز من يوم ${order.date} ولم يتم استلامه بعد.`,
+
+            debt: (order) => `عذراً ${order.customerName}،
+لديك دين مستحق بقيمة ${order.debt.toLocaleString()} د.ع على طلب ${getTypeName(order.type)}.
+يرجى تسديده عند الاستلام.`,
+
+            delayed: (order) => `نعتذر ${order.customerName} عن تأخير طلبك ${getTypeName(order.type)}.
+سيكون جاهزاً خلال يومين. شكراً لتفهمك.`
+        };
+
         // متغيرات مؤقتة
         let tempMeasurements = [];
         let selectedMeasurementIndex = null;
         let currentCustomerDebt = 0;
+        let currentPaymentCustomer = null;
 
         // تهيئة
         function init() {
@@ -903,6 +1462,349 @@
             updateOrdersList();
             updateTrackingList();
             updateCumulativeDebts();
+            updateDashboard();
+            updateReports();
+        }
+
+        // ========== دوال الطباعة (جديد) ==========
+        function printOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const customer = customers.find(c => c.id === order.customerId);
+            if (!customer) return;
+
+            // إنشاء نافذة الطباعة
+            const printWindow = window.open('', '_blank');
+            
+            // تنسيق القياسات
+            let measurementsHTML = '';
+            if (order.type === 'dishdasha') {
+                measurementsHTML = `
+                    <div class="measurement-row"><span>الياخة:</span> <strong>${order.measurement.yakhah} سم</strong></div>
+                    <div class="measurement-row"><span>الكتف:</span> <strong>${order.measurement.katf} سم</strong></div>
+                    <div class="measurement-row"><span>الردان:</span> <strong>${order.measurement.radan} سم</strong></div>
+                    <div class="measurement-row"><span>الصدر:</span> <strong>${order.measurement.sadr} سم</strong></div>
+                    <div class="measurement-row"><span>الطول:</span> <strong>${order.measurement.toul} سم</strong></div>
+                `;
+            } else if (order.type === 'shirt') {
+                measurementsHTML = `
+                    <div class="measurement-row"><span>الياخة:</span> <strong>${order.measurement.yakhah} سم</strong></div>
+                    <div class="measurement-row"><span>الكتف:</span> <strong>${order.measurement.katf} سم</strong></div>
+                    <div class="measurement-row"><span>الكم:</span> <strong>${order.measurement.kom} سم</strong></div>
+                    <div class="measurement-row"><span>الصدر:</span> <strong>${order.measurement.sadr} سم</strong></div>
+                    <div class="measurement-row"><span>الطول:</span> <strong>${order.measurement.toul} سم</strong></div>
+                `;
+            } else {
+                measurementsHTML = `
+                    <div class="measurement-row"><span>الخصر:</span> <strong>${order.measurement.khasr} سم</strong></div>
+                    <div class="measurement-row"><span>الطول:</span> <strong>${order.measurement.toul} سم</strong></div>
+                    <div class="measurement-row"><span>الردف:</span> <strong>${order.measurement.radf} سم</strong></div>
+                    <div class="measurement-row"><span>الركبة:</span> <strong>${order.measurement.rokba} سم</strong></div>
+                `;
+            }
+
+            // إنشاء محتوى الطباعة
+            const printContent = `
+                <!DOCTYPE html>
+                <html dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>فاتورة - خياطة ابو حيدر</title>
+                    <style>
+                        body {
+                            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+                            padding: 20px;
+                            background: white;
+                            direction: rtl;
+                        }
+                        .print-invoice {
+                            max-width: 300px;
+                            margin: 0 auto;
+                            background: white;
+                            border: 1px solid #ddd;
+                            padding: 15px;
+                            border-radius: 10px;
+                        }
+                        .invoice-header {
+                            text-align: center;
+                            margin-bottom: 15px;
+                            padding-bottom: 10px;
+                            border-bottom: 2px dashed #1e3c72;
+                        }
+                        .invoice-header h2 {
+                            color: #1e3c72;
+                            font-size: 1.3rem;
+                            margin-bottom: 5px;
+                        }
+                        .invoice-header p {
+                            color: #666;
+                            font-size: 0.8rem;
+                        }
+                        .invoice-info {
+                            margin-bottom: 15px;
+                            padding: 10px;
+                            background: #f8f9fa;
+                            border-radius: 8px;
+                        }
+                        .invoice-info div {
+                            margin: 5px 0;
+                            font-size: 0.9rem;
+                        }
+                        .invoice-info strong {
+                            color: #1e3c72;
+                        }
+                        .invoice-measurements {
+                            margin-bottom: 15px;
+                            padding: 10px;
+                            background: #e6f7ff;
+                            border-radius: 8px;
+                            border-right: 3px solid #2a5298;
+                        }
+                        .invoice-measurements h4 {
+                            color: #1e3c72;
+                            margin-bottom: 8px;
+                            font-size: 0.95rem;
+                        }
+                        .measurement-row {
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 3px 0;
+                            font-size: 0.85rem;
+                            border-bottom: 1px dashed #ccc;
+                        }
+                        .invoice-footer {
+                            margin-top: 15px;
+                            padding-top: 10px;
+                            border-top: 2px dashed #1e3c72;
+                            text-align: center;
+                            font-size: 0.8rem;
+                            color: #666;
+                        }
+                        .barcode {
+                            text-align: center;
+                            margin: 10px 0;
+                            font-family: 'Courier New', monospace;
+                            font-size: 1.2rem;
+                            letter-spacing: 2px;
+                        }
+                        .status-badge {
+                            display: inline-block;
+                            padding: 3px 8px;
+                            border-radius: 12px;
+                            font-size: 0.7rem;
+                            font-weight: 600;
+                            background: #${order.status === 'pending' ? 'f56565' : 
+                                          order.status === 'cutting' ? '4299e1' :
+                                          order.status === 'sewing' ? 'ed8936' :
+                                          order.status === 'buttons' ? '9f7aea' :
+                                          order.status === 'ironing' ? '48bb78' :
+                                          order.status === 'completed' ? '38b2ac' : 'a0aec0'}20;
+                            color: #${order.status === 'pending' ? 'c53030' : 
+                                    order.status === 'cutting' ? '2b6cb0' :
+                                    order.status === 'sewing' ? 'dd6b20' :
+                                    order.status === 'buttons' ? '6b46c1' :
+                                    order.status === 'ironing' ? '2f855a' :
+                                    order.status === 'completed' ? '319795' : '4a5568'};
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="print-invoice">
+                        <div class="invoice-header">
+                            <h2>🧵 خياطة ابو حيدر</h2>
+                            <p>العراق - بغداد</p>
+                            <p>📞 0770 000 0000</p>
+                        </div>
+                        
+                        <div class="barcode">
+                            #${order.id}
+                        </div>
+                        
+                        <div class="invoice-info">
+                            <div><strong>العميل:</strong> ${customer.name}</div>
+                            <div><strong>الهاتف:</strong> ${customer.phone}</div>
+                            <div><strong>التاريخ:</strong> ${order.date}</div>
+                            <div><strong>الحالة:</strong> <span class="status-badge">${getStatusName(order.status)}</span></div>
+                        </div>
+                        
+                        <div class="invoice-info">
+                            <div><strong>نوع القطعة:</strong> ${getTypeName(order.type)}</div>
+                            <div><strong>القماش:</strong> ${order.fabric}</div>
+                            <div><strong>اللون:</strong> ${order.color}</div>
+                        </div>
+                        
+                        <div class="invoice-measurements">
+                            <h4>📏 القياسات</h4>
+                            ${measurementsHTML}
+                        </div>
+                        
+                        <div class="invoice-info">
+                            <div><strong>المبلغ:</strong> ${order.amount.toLocaleString()} د.ع</div>
+                            <div><strong>المدفوع:</strong> ${order.paid.toLocaleString()} د.ع</div>
+                            <div><strong>المتبقي:</strong> ${order.debt.toLocaleString()} د.ع</div>
+                        </div>
+                        
+                        ${order.notes ? `
+                        <div class="invoice-info">
+                            <strong>ملاحظات:</strong><br>
+                            ${order.notes}
+                        </div>
+                        ` : ''}
+                        
+                        <div class="invoice-footer">
+                            <p>شكراً لثقتكم</p>
+                            <p>تمت الطباعة: ${new Date().toLocaleDateString('ar-EG')}</p>
+                        </div>
+                    </div>
+                    
+                    <script>
+                        window.onload = function() { window.print(); window.onafterprint = function() { window.close(); } }
+                    <\/script>
+                </body>
+                </html>
+            `;
+
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+        }
+
+        // ========== دوال Dashboard ==========
+        function updateDashboard() {
+            const today = new Date().toLocaleDateString('ar-EG');
+            const todayOrders = orders.filter(o => o.date === today).length;
+            document.getElementById('todayOrders').textContent = todayOrders;
+
+            const delayed = orders.filter(o => {
+                const orderDate = new Date(o.date);
+                const todayDate = new Date();
+                const diffDays = Math.ceil((todayDate - orderDate) / (1000 * 60 * 60 * 24));
+                return diffDays > 7 && o.status !== 'delivered';
+            }).length;
+            document.getElementById('delayedOrders').textContent = delayed;
+
+            const inProgress = orders.filter(o => o.status !== 'delivered' && o.status !== 'completed').length;
+            document.getElementById('inProgress').textContent = inProgress;
+
+            const delivered = orders.filter(o => o.status === 'delivered').length;
+            document.getElementById('deliveredCount').textContent = delivered;
+
+            // آخر 5 طلبات
+            const recentOrders = orders.slice(-5).reverse();
+            const recentList = document.getElementById('recentOrdersList');
+            recentList.innerHTML = '';
+
+            recentOrders.forEach(order => {
+                const div = document.createElement('div');
+                div.className = 'recent-order-item';
+                div.innerHTML = `
+                    <span class="recent-order-name">${order.customerName}</span>
+                    <span class="recent-order-status badge-${order.status}">${getStatusName(order.status)}</span>
+                `;
+                recentList.appendChild(div);
+            });
+        }
+
+        // ========== دوال التقارير ==========
+        function updateReports() {
+            const today = new Date().toLocaleDateString('ar-EG');
+            const todayOrders = orders.filter(o => o.date === today);
+            
+            // التقرير اليومي
+            document.getElementById('dailyReportDate').textContent = today;
+            document.getElementById('dailyNewOrders').textContent = todayOrders.length;
+            document.getElementById('dailyCompleted').textContent = todayOrders.filter(o => o.status === 'completed').length;
+            document.getElementById('dailyDelivered').textContent = todayOrders.filter(o => o.status === 'delivered').length;
+            
+            const dailyIncome = todayOrders.reduce((sum, o) => sum + (o.paid || 0), 0);
+            const dailyDebts = todayOrders.reduce((sum, o) => sum + (o.debt || 0), 0);
+            document.getElementById('dailyIncome').textContent = dailyIncome.toLocaleString() + ' د.ع';
+            document.getElementById('dailyDebts').textContent = dailyDebts.toLocaleString() + ' د.ع';
+
+            // التقرير الشهري
+            const currentMonth = new Date().getMonth();
+            const monthOrders = orders.filter(o => new Date(o.date).getMonth() === currentMonth);
+            
+            const monthNames = ['يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+            document.getElementById('monthlyReportDate').textContent = monthNames[currentMonth];
+            
+            document.getElementById('monthlyTotalOrders').textContent = monthOrders.length;
+            
+            const monthlyIncome = monthOrders.reduce((sum, o) => sum + (o.paid || 0), 0);
+            const monthlyDebts = monthOrders.reduce((sum, o) => sum + (o.debt || 0), 0);
+            document.getElementById('monthlyIncome').textContent = monthlyIncome.toLocaleString() + ' د.ع';
+            document.getElementById('monthlyDebts').textContent = monthlyDebts.toLocaleString() + ' د.ع';
+            
+            // تفاصيل حسب النوع
+            document.getElementById('monthlyDishdasha').textContent = monthOrders.filter(o => o.type === 'dishdasha').length;
+            document.getElementById('monthlyShirt').textContent = monthOrders.filter(o => o.type === 'shirt').length;
+            document.getElementById('monthlyPants').textContent = monthOrders.filter(o => o.type === 'pants').length;
+        }
+
+        function refreshReports() {
+            updateDashboard();
+            updateReports();
+            alert('✅ تم تحديث التقارير');
+        }
+
+        function exportReports() {
+            const report = {
+                date: new Date().toLocaleDateString('ar-EG'),
+                daily: {
+                    orders: document.getElementById('dailyNewOrders').textContent,
+                    income: document.getElementById('dailyIncome').textContent,
+                    debts: document.getElementById('dailyDebts').textContent
+                },
+                monthly: {
+                    total: document.getElementById('monthlyTotalOrders').textContent,
+                    income: document.getElementById('monthlyIncome').textContent,
+                    debts: document.getElementById('monthlyDebts').textContent,
+                    breakdown: {
+                        dishdasha: document.getElementById('monthlyDishdasha').textContent,
+                        shirt: document.getElementById('monthlyShirt').textContent,
+                        pants: document.getElementById('monthlyPants').textContent
+                    }
+                }
+            };
+            
+            // حفظ كملف JSON
+            const dataStr = JSON.stringify(report, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `تقرير_${new Date().toLocaleDateString('ar-EG')}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            alert('📥 تم تصدير التقرير');
+        }
+
+        // ========== دوال قوالب واتساب ==========
+        function sendTemplateMessage(template, orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const message = messageTemplates[template](order);
+            
+            // فتح واتساب مع الرسالة
+            const whatsappUrl = `https://wa.me/${order.customerPhone}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // إضافة أزرار القوالب في tracking
+        function addTemplateButtonsToOrder(order, container) {
+            const templateDiv = document.createElement('div');
+            templateDiv.className = 'template-buttons';
+            templateDiv.innerHTML = `
+                <button class="template-btn ready" onclick="sendTemplateMessage('ready', ${order.id})">📱 جاهز</button>
+                <button class="template-btn reminder" onclick="sendTemplateMessage('reminder', ${order.id})">⏰ تذكير</button>
+                <button class="template-btn debt" onclick="sendTemplateMessage('debt', ${order.id})">💰 دين</button>
+                <button class="template-btn delayed" onclick="sendTemplateMessage('delayed', ${order.id})">⚠️ تأخير</button>
+                <button class="template-btn print" onclick="printOrder(${order.id})">🖨️ طباعة</button>
+            `;
+            container.appendChild(templateDiv);
         }
 
         // إظهار نوع القياس
@@ -1067,7 +1969,6 @@
             customers.forEach(customer => {
                 const div = document.createElement('div');
                 div.className = 'customer-item';
-                div.onclick = () => showCustomerDetails(customer.id);
                 
                 const types = {};
                 customer.measurements.forEach(m => {
@@ -1083,31 +1984,152 @@
                     <div class="customer-name">${customer.name}</div>
                     <div class="customer-phone">📞 ${customer.phone}</div>
                     <div class="measurement-badges">${badges}</div>
+                    <div class="customer-actions">
+                        <button class="action-btn-small btn-edit" onclick="editCustomer(${customer.id})">✏️ تعديل</button>
+                        <button class="action-btn-small btn-pay" onclick="showPaymentModal(${customer.id})">💰 تسديد</button>
+                    </div>
                 `;
                 list.appendChild(div);
             });
         }
 
-        // عرض تفاصيل العميل
-        function showCustomerDetails(customerId) {
+        // دوال تعديل العميل
+        function editCustomer(customerId) {
             const customer = customers.find(c => c.id === customerId);
             if (!customer) return;
 
-            let details = `العميل: ${customer.name}\nهاتف: ${customer.phone}\n`;
-            details += `القياسات (${customer.measurements.length}):\n`;
+            document.getElementById('editCustomerId').value = customer.id;
+            document.getElementById('editCustomerName').value = customer.name;
+            document.getElementById('editCustomerPhone').value = customer.phone;
+            document.getElementById('editCustomerNotes').value = customer.notes || '';
 
-            customer.measurements.forEach((m, i) => {
-                details += `\n${i+1}. `;
+            const measurementsList = document.getElementById('editMeasurementsList');
+            measurementsList.innerHTML = '';
+
+            customer.measurements.forEach((m, index) => {
+                let details = '';
                 if (m.type === 'dishdasha') {
-                    details += `دشداشة: ياخة ${m.yakhah} | كتف ${m.katf} | ردان ${m.radan} | صدر ${m.sadr} | طول ${m.toul}`;
+                    details = `دشداشة: ياخة ${m.yakhah} | كتف ${m.katf} | ردان ${m.radan} | صدر ${m.sadr} | طول ${m.toul}`;
                 } else if (m.type === 'shirt') {
-                    details += `قميص: ياخة ${m.yakhah} | كتف ${m.katf} | كم ${m.kom} | صدر ${m.sadr} | طول ${m.toul}`;
+                    details = `قميص: ياخة ${m.yakhah} | كتف ${m.katf} | كم ${m.kom} | صدر ${m.sadr} | طول ${m.toul}`;
                 } else {
-                    details += `بنطلون: خصر ${m.khasr} | طول ${m.toul} | ردف ${m.radf} | ركبة ${m.rokba}`;
+                    details = `بنطلون: خصر ${m.khasr} | طول ${m.toul} | ردف ${m.radf} | ركبة ${m.rokba}`;
+                }
+
+                const div = document.createElement('div');
+                div.style.cssText = 'background:#f8f9fa; padding:8px; border-radius:8px; margin-bottom:5px; font-size:0.75rem;';
+                div.textContent = details;
+                measurementsList.appendChild(div);
+            });
+
+            document.getElementById('editCustomerModal').style.display = 'flex';
+        }
+
+        function saveCustomerChanges() {
+            const id = parseInt(document.getElementById('editCustomerId').value);
+            const name = document.getElementById('editCustomerName').value;
+            const phone = document.getElementById('editCustomerPhone').value;
+            const notes = document.getElementById('editCustomerNotes').value;
+
+            if (!name || !phone) {
+                alert('الرجاء إدخال الاسم ورقم الهاتف');
+                return;
+            }
+
+            const index = customers.findIndex(c => c.id === id);
+            if (index !== -1) {
+                customers[index].name = name;
+                customers[index].phone = phone;
+                customers[index].notes = notes;
+                
+                localStorage.setItem('customers', JSON.stringify(customers));
+                updateCustomersList();
+                updateCustomerSelect();
+                closeEditModal();
+                alert('تم تعديل بيانات العميل بنجاح');
+            }
+        }
+
+        function closeEditModal() {
+            document.getElementById('editCustomerModal').style.display = 'none';
+        }
+
+        // دوال تسديد الديون
+        function showPaymentModal(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (!customer) return;
+
+            currentPaymentCustomer = customerId;
+            document.getElementById('paymentCustomerName').textContent = customer.name;
+            
+            const customerOrders = orders.filter(o => o.customerId == customerId && o.debt > 0);
+            const totalDebt = customerOrders.reduce((sum, o) => sum + o.debt, 0);
+            document.getElementById('paymentCustomerDebt').textContent = `إجمالي الدين: ${totalDebt.toLocaleString()} د.ع`;
+
+            const ordersList = document.getElementById('paymentOrdersList');
+            ordersList.innerHTML = '';
+
+            customerOrders.forEach(order => {
+                const div = document.createElement('div');
+                div.className = 'order-debt-item';
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between;">
+                        <span>${getTypeName(order.type)} - ${order.fabric}</span>
+                        <span style="font-weight:600;">${order.debt.toLocaleString()} د.ع</span>
+                    </div>
+                    <div style="font-size:0.7rem; color:#666;">${order.date}</div>
+                `;
+                ordersList.appendChild(div);
+            });
+
+            document.getElementById('paymentAmount').value = totalDebt;
+            document.getElementById('paymentNotes').value = '';
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function processPayment() {
+            if (!currentPaymentCustomer) return;
+
+            const amount = parseFloat(document.getElementById('paymentAmount').value);
+            const notes = document.getElementById('paymentNotes').value;
+
+            if (!amount || amount <= 0) {
+                alert('الرجاء إدخال مبلغ صحيح');
+                return;
+            }
+
+            const customerOrders = orders.filter(o => o.customerId == currentPaymentCustomer && o.debt > 0);
+            let remainingAmount = amount;
+
+            // توزيع المبلغ على الديون حسب الأقدم
+            customerOrders.sort((a, b) => a.id - b.id).forEach(order => {
+                if (remainingAmount <= 0) return;
+                
+                const orderDebt = order.debt;
+                if (orderDebt > 0) {
+                    const payAmount = Math.min(remainingAmount, orderDebt);
+                    order.debt -= payAmount;
+                    order.paid = (order.paid || 0) + payAmount;
+                    remainingAmount -= payAmount;
                 }
             });
 
-            alert(details);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            closePaymentModal();
+            updateCumulativeDebts();
+            updateTrackingList();
+            updateOrdersList();
+            updateDashboard();
+            updateReports();
+            
+            alert(`✅ تم تسديد ${(amount - remainingAmount).toLocaleString()} د.ع` + 
+                  (remainingAmount > 0 ? `\nالمبلغ المتبقي: ${remainingAmount.toLocaleString()} د.ع لم يكتمل` : ''));
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            currentPaymentCustomer = null;
         }
 
         // البحث في العملاء
@@ -1123,7 +2145,6 @@
             filtered.forEach(customer => {
                 const div = document.createElement('div');
                 div.className = 'customer-item';
-                div.onclick = () => showCustomerDetails(customer.id);
                 
                 const types = {};
                 customer.measurements.forEach(m => {
@@ -1139,6 +2160,10 @@
                     <div class="customer-name">${customer.name}</div>
                     <div class="customer-phone">📞 ${customer.phone}</div>
                     <div class="measurement-badges">${badges}</div>
+                    <div class="customer-actions">
+                        <button class="action-btn-small btn-edit" onclick="editCustomer(${customer.id})">✏️ تعديل</button>
+                        <button class="action-btn-small btn-pay" onclick="showPaymentModal(${customer.id})">💰 تسديد</button>
+                    </div>
                 `;
                 list.appendChild(div);
             });
@@ -1296,6 +2321,8 @@
             updateOrdersList();
             updateTrackingList();
             updateCumulativeDebts();
+            updateDashboard();
+            updateReports();
             alert('تم إنشاء الطلب بنجاح');
             switchTab('orders');
         }
@@ -1318,6 +2345,10 @@
             if (tabName === 'new-order') updateCustomerSelect();
             if (tabName === 'tracking') updateTrackingList();
             if (tabName === 'debts') updateCumulativeDebts();
+            if (tabName === 'reports') {
+                updateDashboard();
+                updateReports();
+            }
             
             // Scroll to top
             document.querySelector('.content-area').scrollTop = 0;
@@ -1373,7 +2404,7 @@
             });
         }
 
-        // تحديث قائمة المتابعة مع أزرار التقدم والواتساب
+        // تحديث قائمة المتابعة مع أزرار التقدم والواتساب والطباعة
         function updateTrackingList(filter = 'all') {
             const list = document.getElementById('trackingList');
             if (!list) return;
@@ -1425,7 +2456,7 @@
                     actionButtons = `
                         <div class="progress-buttons">
                             <button class="progress-btn deliver-btn" onclick="deliverOrder(${order.id})">
-                                <span>🚚</span> تسليم للعميل
+                                <span>🚚</span> تسليم
                             </button>
                         </div>
                     `;
@@ -1451,6 +2482,10 @@
                     </div>
                     ${actionButtons}
                 `;
+                
+                // إضافة أزرار القوالب والطباعة للطلبات
+                addTemplateButtonsToOrder(order, div);
+                
                 list.appendChild(div);
             });
         }
@@ -1474,6 +2509,7 @@
                     localStorage.setItem('orders', JSON.stringify(orders));
                     updateTrackingList();
                     updateOrdersList();
+                    updateDashboard();
                     
                     alert(`تم نقل الطلب إلى مرحلة: ${getStatusName(nextStage)}`);
                 }
@@ -1528,6 +2564,8 @@
                     updateTrackingList();
                     updateOrdersList();
                     updateCumulativeDebts();
+                    updateDashboard();
+                    updateReports();
                     alert('تم تسليم القطعة - الدين لا يزال مسجلاً');
                 }
             }
@@ -1545,7 +2583,7 @@
             }
         }
 
-        // تحديث الديون التراكمية
+        // تحديث الديون التراكمية مع أزرار تسديد
         function updateCumulativeDebts() {
             const list = document.getElementById('cumulativeDebtsList');
             if (!list) return;
@@ -1593,6 +2631,11 @@
                         <span class="total-debt-badge">${customer.totalDebt.toLocaleString()} د.ع</span>
                     </div>
                     <div>${ordersList}</div>
+                    <div style="margin-top:10px;">
+                        <button class="btn-pay" onclick="showPaymentModal(${customer.customerId})" style="width:100%; padding:8px; border:none; border-radius:8px; background:#48bb78; color:white; font-weight:600; cursor:pointer;">
+                            💰 تسديد الدين
+                        </button>
+                    </div>
                 `;
                 list.appendChild(div);
             });
